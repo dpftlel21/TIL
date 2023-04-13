@@ -9,7 +9,7 @@
 
 <h2>2. Html의 기본요소 (1/2)</h2><hr>
 
-<img src="https://postfiles.pstatic.net/MjAyMjA1MTdfMTA5/MDAxNjUyNzc2MjYyMjQ3.E7Wgx3HfxTW-53vM5FJxWlrEy1-QAlkmvbqVGdix4FEg.-jGaPwz1hC2Q2duzHkJB9UOfVygGPyJ4_tJ8emK5YsYg.PNG.dkdnmju/basic.png?type=w773" width="5000px">
+<img src="https://postfiles.pstatic.net/MjAyMjA1MTdfMTA5/MDAxNjUyNzc2MjYyMjQ3.E7Wgx3HfxTW-53vM5FJxWlrEy1-QAlkmvbqVGdix4FEg.-jGaPwz1hC2Q2duzHkJB9UOfVygGPyJ4_tJ8emK5YsYg.PNG.dkdnmju/basic.png?type=w773" width="5000px" >
 
 ㉠ `<!DOCTYPE html>` — doctype. 아주 오래전 HTML 이 막 나왔을 때 (1991년 2월쯤), doctype은 (자동 오류 확인이나 다른 유용한 것을 의미하는) good HTML로 인정받기 위해 HTML 페이지가 따라야 할 일련의 규칙으로의 연결통로로써 작동하는 것을 의미하였습니다. 하지만, 최근에는 아무도 그런 것들에 대해 신경쓰지 않으며 그저 모든 것이 올바르게 동작하게 하기 위해 포함되어야 할 역사적인 유물일 뿐입니다. 지금은, 그게 알아야 할 전부 입니다.
 
