@@ -209,6 +209,5 @@ console.log([findLastElement.length - 1]);
 ---
 
 
-
-
-### ✔️ 배열 반복하기
+ 배열의 메서드   
+ JSON을 JavaScript배열의 형태로 바꾸는 방법
