@@ -115,14 +115,37 @@ __proto__는 다소 구식이기에 다음과 같은 메서드를 사용하는 �
 
 - Object.setPrototypeOf(obj, proto) : obj의 [[Prototype]]이 proto가 되도록 설정합니다.
 
+
 ```js
 let human = {
-    walks: true;
+    walks: true
 };
 
 let Tim = Object.create(human); // true;
 
 alert(Tim.walks); // true
 
+alert(Object.getPrototypeOf(Tim) === human); // true
+
+Object.setPrototypeOf(Tim, {}); // Tim의 프로토타입 {}로 바꿈
 ```
 
+- Object.prototype.hasOwnProperty() : 객체가 특정 프로퍼티를 가지고 있는지 불리언 값을 반환합니다.
+
+
+```js
+const object1 = {};
+object1.property1 = 42;
+
+console.log(object1.hasOwnProperty('property1'));
+// expected output: true
+
+console.log(object1.hasOwnProptery('toString'));
+// expected output: false
+
+console.log(object1.hasOwnProperty('hasOwnProperty'));
+// expected output: false
+```
+hasOwnProperty 는 프로퍼티의 존재 유무를 판단하는 것이지, 프로퍼티의 값을 확인하는 것이 아니기 때문에 프로퍼티 값이 undefined나 null이어도 true를 반환합니다.
+
+hasOwnProperty 라는 명칭의 property를 가지는 객체가 존재하면, 올바른 결과를 얻기 힘들지도 모른다. 올바른 결과를 얻기 위해선 외부 `hasOwnProperty를 사용해야합니다.
