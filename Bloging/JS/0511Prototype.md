@@ -85,3 +85,44 @@ rabbit.walk(); // 동물이 걸어요!, rabbit에서 walk() 호출 o
 
 
 클래스에서 생성자 함수를 호출하여 인스턴스를 생성하면, 해당 인스턴스는 클래스의 프로토타입을 상속받습니다. 이때, 프로토타입은 클래스의 prototype 속성에 정의됩니다.
+
+#### 📝 프로토타입 메서드 빌려오기 (join)
+
+```js
+let obj = {
+    0: "Hi",
+    1: "Everyone!",
+    length : 2,
+};
+
+obj.join = Array.prototype.join; // Array 복사
+
+alert(obj.join(',')); // Hi,Everyone!
+```
+
+다수의 내장 메서드가 join과 같이 제대로 된 인덱스가 있는지, length 프로퍼티가 있는지만 확인하기에 에러 없이 의도한 대로 동작합니다. obj.__proto__를 Array.prototype으로 설정해 배열 메서드를 상속 받는 방법도 있습니다. (obj에서 모든 Array 메서드 사용 가능.)
+
+자바스크립트는 단일 상속만 허용하기에 obj가 다른 객체를 상속받고 있을 때는 사용할 수 없습니다.
+메서드 빌리기는 여러 객체에 필요한 기능을 가져와 섞는 것이 가능하기에 유연한 개발을 이끌어낼 수 있습니다.
+
+#### ⭐ 프로토타입 메서드와 __proto__가 없는 객체
+
+__proto__는 다소 구식이기에 다음과 같은 메서드를 사용하는 것이 좋습니다.
+
+- Object.create(proto, [descriptors]) : [[Prototype]]이 proto를 참조하는 빈 객체를 만들고, 이때 프로퍼티 설명자를 추가로 넘길 수 있습니다.
+
+- Object.getPrototypeOf(obj) : obj의 [[Prototype]]을 반환합니다.
+
+- Object.setPrototypeOf(obj, proto) : obj의 [[Prototype]]이 proto가 되도록 설정합니다.
+
+```js
+let human = {
+    walks: true;
+};
+
+let Tim = Object.create(human); // true;
+
+alert(Tim.walks); // true
+
+```
+
