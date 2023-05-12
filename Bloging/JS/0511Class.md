@@ -233,6 +233,24 @@ class 자식클래스 extends 부모클래스 {
 }
 ```
 
+#### ⭐ instanceof 로 클래스 확인하기
+
+instanceof 연산자를 사용하면 객체가 특정 클래스에 속하는지 아닌지를 확인할 수 있고, 상속 관계도 확인할 수 있습니다. 
+
+```js
+obj instanceof class
+```
+
+```js
+class Human {}
+let human = new Human();
+
+// human은 Human의 객체?? 맞으면 true, 아니면 false
+alert(human instanceof Human); // true
+```
+
+이외에도 생성자 함수, 배열에도 instanceof를 사용할 수 있습니다. Array는 프로토타입 기반으로 상속을 받지만 클래스 Object에도 속합니다.
+
 ---
 
 # 2. 객체 지향 프로그래밍 (Object Oriented Programming, OOP)
