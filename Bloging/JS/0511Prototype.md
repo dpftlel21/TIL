@@ -2,13 +2,13 @@
 
 ### ✔️ 프로토타입(prototype)이란?
 
-객체는 `[[Prototype]]`이라는 숨김 프로퍼티를 갖는데, 이 값은 `null`이나 다른 객체에 대한 참조가 되는데, 다른 객체를 참조하는 경우 참조하는 대상을 프로토타입이라고 합니다.
+객체는 `[[Prototype]]`이라는 내부 프로퍼티를 갖는데, 이 값은 `null`이나 다른 객체에 대한 참조가 되는데, 다른 객체를 참조하는 경우 참조하는 대상을 프로토타입이라고 합니다.
 
 object에서 프로퍼티를 읽으려고 하는데 해당 프로퍼티가 없으면 자바스크립트는 자동으로 프로토타입에서 프로퍼티를 찾는데 이런 동작 방식을 프로토타입 상속이라고 합니다.
 
-####  📝 `.prototype`
+####  📝 `obj.prototype`
 
-함수를 정의하면 다른 곳에 생성된 프로토타입 객체는 자신이 다른 객체의 원형이 되는 객체입니다. 모든 객체는 프로토타입 객체에 접근 할 수 있고, 프로토타입 객체도 동적으로 런타임에 멤버를 추가할 수 있습니다. 같은 원형을 복사로 생성된 모든 객체는 추가된 멤버를 사용할 수 있습니다.
+obj.prototype의 메서드는 모든내장 객체로 전파되며 모든 인스턴스에서 사용할 수 있습니다.
 
 객체 생성자 함수 아래에 `.prototype.[원하는키] = 코드`를 입력하여 설정 할 수 있습니다.
 
@@ -39,7 +39,7 @@ console.log(cat.say());
 
 같은 객체 생성자 함수를 사용하는 경우, 특정 함수 또는 값을 재사용 할 수 있는데 바로 프로토타입입니다.
 
-####  📝 `.__proto__`
+####  📝 프로토타입 체인, `.__proto__`
 
 ```js
 let animal = {
@@ -57,6 +57,10 @@ console.log( rabbit.jumps ); // true
 ```
 
 위와 같이 `__proto__`를 사용하여 값을 설정할 수 있습니다. 따라서 rabbit의 프로토타입은 animal 혹은, rabbit은 animal을 상속받았다라고 표현할 수 있습니다.
+
+`__proto__` 프로퍼티는 그 객체에게 상속을 해 준 부모 객체를 가리킵니다. 객체는 `__proto__` 프로퍼티가 가리키는 부모 객체의 프로퍼티를 사용할 수 있습니다.
+
+프로토타입 체인이란 자신이 가지고 있지 않은 프로퍼티를 `__proto__` 프로퍼티가 가리키는 객체를 차례대로 거슬러 올라가며 검색하며, 이와 같은 객체의 연결고리를 의미합니다.
 
 ```js
 let animal = {
@@ -149,3 +153,65 @@ console.log(object1.hasOwnProperty('hasOwnProperty'));
 hasOwnProperty 는 프로퍼티의 존재 유무를 판단하는 것이지, 프로퍼티의 값을 확인하는 것이 아니기 때문에 프로퍼티 값이 undefined나 null이어도 true를 반환합니다.
 
 hasOwnProperty 라는 명칭의 property를 가지는 객체가 존재하면, 올바른 결과를 얻기 힘들지도 모른다. 올바른 결과를 얻기 위해선 외부 `hasOwnProperty를 사용해야합니다.
+
+#### 📝 for..in 루프
+
+for..in 문은 객체에있는 Non-symbol, 열거가능한 프로퍼티를 순회할 때 사용합니다. 자바스크립트에는 원시타입인 Boolean, String, Number, Undefined, Null과 객체타입(Object type)인 Object가 존재합니다. 여기에 ES6에서 새롭게 7번째 type이 추가되었는데 그게 바로 심볼(Symbol)입니다.
+
+
+```js
+// for..in 기본 문법
+
+for (variable in object) {
+    ...statement...
+}
+```
+
+```js
+let sum = 0;
+
+let numberSum = {
+    1: 10,
+    2: 20,
+    3: 40,
+};
+
+for (let numSum in numberSum) {
+    sum += numberSum[numSum];
+}
+
+console.log(sum); // 70
+```
+
+배열(Array)이나 Object(객체)와 같이 constructors로부터 생성된 객체들은 모두 Object.prototype과 String.prototype으로부터 String의 indexOf() 메소드나 Object의 toString() 메소드와 같은 Non-enumerable(비열거) 프로퍼티들을 상속받습니다.
+
+
+```js
+function Person (name, gender, hairColor) {
+  this.name = name;
+  this.gender = gender;
+  this.hairColor = hairColor;
+}
+ 
+const person1 = new Person('Julia', 'female', 'brown');
+ 
+Person.prototype.name = "Alice";
+Object.prototype.age = 35;
+```
+
+#### 📝 new 연산자
+
+객체를 생성하고, 프로토타입 설정, 객체의 초기화를 수행합니다.
+
+```js
+function Circle(center, radius) {
+    this.center = center;
+    this.radius = radius;
+}
+
+Circle.prototype.area = function() {
+  return Math.PI*this.radius*this.radius;
+};
+
+let C = new Circle({x:0 , y:0}, 2.0);
+```
