@@ -6,9 +6,9 @@
 
 object에서 프로퍼티를 읽으려고 하는데 해당 프로퍼티가 없으면 자바스크립트는 자동으로 프로토타입에서 프로퍼티를 찾는데 이런 동작 방식을 프로토타입 상속이라고 합니다.
 
-####  📝 `obj.prototype`
+####  📝 `.prototype`
 
-obj.prototype의 메서드는 모든내장 객체로 전파되며 모든 인스턴스에서 사용할 수 있습니다.
+함수를 정의하면 다른 곳에 생성된 프로토타입 객체는 자신이 다른 객체의 원형이 되는 객체입니다. 모든 객체는 프로토타입 객체에 접근 할 수 있고, 프로토타입 객체도 동적으로 런타임에 멤버를 추가할 수 있습니다. 같은 원형을 복사로 생성된 모든 객체는 추가된 멤버를 사용할 수 있습니다.
 
 객체 생성자 함수 아래에 `.prototype.[원하는키] = 코드`를 입력하여 설정 할 수 있습니다.
 
@@ -113,11 +113,11 @@ alert(obj.join(',')); // Hi,Everyone!
 
 __proto__는 다소 구식이기에 다음과 같은 메서드를 사용하는 것이 좋습니다.
 
-- Object.create(proto, [descriptors]) : [[Prototype]]이 proto를 참조하는 빈 객체를 만들고, 이때 프로퍼티 설명자를 추가로 넘길 수 있습니다.
+- Object.create(proto, [propertiesObject]) : 인수로 지정한 프로토타입 객체 또는 프로퍼티로 새로운 객체 생성
 
-- Object.getPrototypeOf(obj) : obj의 [[Prototype]]을 반환합니다.
+- Object.getPrototypeOf(obj) : 인수로 지정한 객체의 프로토타입 반환
 
-- Object.setPrototypeOf(obj, proto) : obj의 [[Prototype]]이 proto가 되도록 설정합니다.
+- Object.setPrototypeOf(obj, proto) : 인수로 지정한 객체의 프로토타입을 설정
 
 
 ```js
