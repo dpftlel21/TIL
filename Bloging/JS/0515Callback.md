@@ -20,7 +20,7 @@
 2. return 값 : 임의의 타이머 ID
 
 ```js
-setTimeout(funtion(){
+setTimeout(function(){
     console.log("1초 후 실행");
 }, 1000);
 ```
@@ -31,7 +31,7 @@ setTimeout(funtion(){
 2. return 값 : 값 x 
 
 ```js
-const timer = setTimeout(funtion(){
+const timer = setTimeout(function(){
     console.log("10초 후 실행");
 }, 10000);
 
