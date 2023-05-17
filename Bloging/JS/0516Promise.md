@@ -7,6 +7,16 @@ Promise는 class이기 때문에 `new` 키워드를 통해 Promise를 생성하�
 새로운 프로미스가 만들어 질 때 executor(콜백함수)가 바로 자동으로 실행되므로 주의해야 합니다.
 코드가 정상적으로 처리가 되었다면 `resolve` 함수를 호출하고 에러가 발생했을 경우에는 `reject` 함수를 호출하면 됩니다.
 
+```js
+// 기본 문법
+
+const promise = new Promise(function(resolve, reject) { ... });
+
+// resolve : 함수 안의 처리가 끝났을 때 호출해야 하는 콜백함수, 어떠한 값도 인수로 넘길 수 있으며, 이 값은 다음 처리를 실행하는 함수에 전달
+
+// reject : 함수 안의 처리가 실패할 때 호출해야 하는 콜백함수, 마찬가지로 어떠한 값도 인수로 넘길 수 있으며, 대부분의 경우 오류 메시지 문자열을 인수로 사용
+```
+
 - `Promise 객체의 내부 프로퍼티` : `new Promise`가 반환하는 Promise 객체는 state, result 내부 프로퍼티를 갖습니다. 직접 접근은 할 수 없고 then, catch, finally 메서드를 사용해야 접근할 수 있습니다.
 
 - `State` : 기본은 pending(대기)이며, 비동기 처리를 수행할 콜백함수가 성공적으로 작동했다면 fulfilled(이행)로 변경이 되고, 에러가 발생했다면 rejected(거부)가 됩니다.
@@ -15,7 +25,6 @@ Promise는 class이기 때문에 `new` 키워드를 통해 Promise를 생성하�
 
 ```js
 // Producer
-
 const promise = new Promise((resolve, reject) => {
     console.log("doing something...");
     setTimeout(() => {
@@ -26,7 +35,6 @@ const promise = new Promise((resolve, reject) => {
 });
 
 // Consumer : then, catch, finally
-
 promise
 .then(value => {
     console.log(value);
@@ -43,7 +51,7 @@ promise
 
 ### ✔️ then, catch, finally
 
-- Then : `executor`에 작성했던 코드들이 정상적 처리가 되면 `resolve` 함수를 호출하고 `.then` 메서드로 접근할 수 있습니다. .then 안에서 리턴한 값이 Promise면 Promise의 내부 프로퍼티 result를 .then 콜백함수의 인자로 받아오고, Promise가 아니라면 리턴한 값을 받아옵니다.
+- Then : `executor`에 작성했던 코드들이 정상적 처리가 되면 `resolve` 함수를 호출하고 `.then` 메서드로 접근할 수 있습니다. `.then` 안에서 리턴한 값이 Promise면 Promise의 내부 프로퍼티 result를 `.then` 콜백함수의 인자로 받아오고, Promise가 아니라면 리턴한 값을 받아옵니다.
 
 - catch : `executor`에 작성했던 코드들이 에러가 발생했을 경우, `reject(new Error("에러"))`함수를 호출하고 `.catch`메서드로 접근할 수 있습니다.
 
@@ -94,7 +102,7 @@ getHen()
   .catch(console.log);
 ```
 
-#### 🧐 Promise.all()
+#### 🧐 `Promise.all()`
 
 `Promise.all()`은 여러 개의 비동기 작업을 동시에 처리할 때 사용합니다. 인자로는 배열을 받고, 해당 배열의 모든 Promise에서 executor 내 작성했던 코드들이 정상적으로 처리가 되었다면 결과를 배열에 저장하고 새로운 Promise를 반환합니다.
 
@@ -133,7 +141,7 @@ Promise.all([promiseOne(), promiseTwo(), promiseThree()])
   .catch((err) => console.log(err));
 ```
 
-✔️ Async/Await
+✔️ `Async/Await`
 
 Async/Await 을 통해 Promise 코드를 간결하게 작성할 수 있습니다. 함수 앞에 async 함수 내에서만 await 키워드를 사용합니다. 
 
