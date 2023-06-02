@@ -84,7 +84,7 @@ const server = http.createServer((request, response) => {
 });
 ```
 
-#### ⭐ Express 서버( cors 미들웨어를 사용해서 더욱 간단하게 CORS 설정 O ) 
+#### ⭐ Express 서버( cors 미들웨어를 사용해서 더욱 간단하게 CORS 설정 O )
 
 ```js
 const cors = require("cors");
@@ -105,5 +105,163 @@ app.use(cors(options));
 //특정 요청
 app.get("/example/:id", cors(), function (req, res, next) {
   res.json({ msg: "example" });
+});
+```
+
+---
+
+# 2. Express, Middleware
+
+### ✔️ Express
+
+```js
+// Express 설치
+
+npm install express
+```
+
+```js
+// 응답으로 "Hello World 보내는 Express 코드"
+
+const express = require("express");
+const app = express();
+const port = 3000;
+
+app.get("/", (request, response) => {
+  response.send("Hello World!");
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
+```
+
+### 😀 라우팅, 메서드와 url 따라 Routing 하기
+
+메서드와 url(/lower , /upper 등)로 분기점을 만드는 것을 라우팅이라 하며, 클라이언트는 특정한 HTTP 요청 메서드(GET, POST 등)와 함께 서버의 특정 URL로 HTTP 요청을 보냅니다.
+
+즉, 라우팅은 클라이언트 요청에 해당하는 Endpoint에 따라 서버가 응답하는 방법을 결정하는 것입니다.
+
+```js
+// Express 라우터
+
+const router = express.Router();
+
+router.get("/lower", (request, response) => {
+  response.send(data);
+});
+
+router.post("/lower", (request, response) => {
+  // 작업 내용
+});
+```
+
+---
+
+### ✔️ Middleware
+
+미들웨어란 컨베이어 벨트 위에 올라가 있는 요청(Request)에 필요한 기능을 더하거나, 문제가 발견된 불량품을 걷어내는 역할을 수행하는 것을 의미하며, express의 가장 큰 장점입니다.
+
+미들웨어를 이용하여 Node.js 만으로 구현한 서버에서 번거로울 수 있는 작업을 보다 쉽게 적용할 수 있습니다.
+
+### 🖥️ Case 1. POST 요청 등에 포함된 body(payload) 구조화할 때
+
+```js
+// body-parser 미들웨어 설치
+
+npm install body-parser
+```
+
+```js
+// body-parser 미들웨어 이용
+
+const bodyParser = require("body-parse");
+const jsonParser = bodyParser.json();
+
+// 생략
+app.post("/users", jsonParser, function (request, response) {});
+```
+
+Express v4.16.0 부터는 따로 설치하지 않으며, Express 내장 미들웨어 express.json()을 사용합니다.
+
+```js
+const jsonParser = express.json();
+
+// 생략
+app.post("/api/users", jsonParser, function (req, res) {});
+```
+
+### 🖥️ Case 2. 모든 요청/응답에 CORS 헤더를 붙일 때
+
+Node.js HTTP 모듈을 이용한 코드에 CORS 헤더를 붙이려면, `writeHead` 메서드를 이용할 수 있으며, Node.js에서 이 메서드를 통해 라우팅마다 헤더를 매번 넣고 `OPTIONS` 메서드에 대한 라우팅도 따로 구현해야 합니다.
+
+그러나, CORS 미들웨어를 통해 이 과정을 간단하게 처리할 수 있습니다.
+
+```js
+// cors 미들웨어 설치
+
+npm install cors
+```
+
+```js
+const cors = require("cors");
+
+// 생략
+
+// 모든 요청에 대해 CORS 허용
+app.use(cors());
+
+// 생략
+
+// 특정 요청에 대해 CORS 허용
+
+app.get("/products/:id", cors(), function (request, response, next) {
+  res.json({ msg: "This is CORS-enabled for a Single Route" });
+});
+```
+
+### 🖥️ Case 3. 모든 요청에 대해 url이나 메서드 확인할 때
+
+ <img src="https://postfiles.pstatic.net/MjAyMzA2MDJfMTA1/MDAxNjg1Njg0NjgzMDQ0.-sP1661wp0Rt3U9UkK2GuR0iFKIafPyiz-ZXZr34-R8g.SON7Ycmt4AqcLB8KEYjbZK7CF8wIrCaZWqBYzMzRBwMg.PNG.dkdnmju/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2023-06-02_144400.png?type=w773">
+
+<출처 : 코드스테이츠>
+
+endpoint가 `/`면서, 클라이언트로부터 `GET` 요청을 받았을 때 적용되는 미들웨어를 의미하고, 파라미터 순서에 유의해야 합니다. `req`, `res`는 요청(request), 응답(response)를 의미하며, `next`는 다음 미들웨어를 실행하는 역할을 수행합니다.
+
+모든 요청에 동일한 미들웨어를 적용할 때는 `app.use` 메서드를 사용합니다.
+
+```js
+// use 메서드로 모든 요청에 대하여 미들웨어를 적용
+
+const express = require("express");
+const app = express();
+
+const myLogger = function (req, res, next) {
+  console.log("LOGGED");
+  next();
+};
+
+app.use(myLogger);
+
+app.get("/", function (req, res) {
+  res.send("Hello World!");
+});
+
+app.listen(3000);
+```
+
+### 🖥️ Case 4. 요청 헤더에 사용자 인증 정보가 담겨있는지 확인할 때
+
+HTTP 요청에서 토큰(사용자 인증에 사용)이 있는지 판단하고, 이미 로그인한 사용자일 경우 성공, 아닐 경우 에러 보내는 미들웨어
+
+```js
+app.use((req, res, next) => {
+  // 토큰이 있는지 확인, 없으면 받아줄 수 없음.
+  if (req.headers.token) {
+    req.isLoggedIn = true;
+    next();
+  } else {
+    res.status(400).send("invalid user");
+  }
 });
 ```
