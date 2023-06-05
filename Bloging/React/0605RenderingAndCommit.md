@@ -30,6 +30,5 @@ root.render(<Image />);
 
 렌더링후 React는 DOM을 수정합니다. 초기 렌더링의 경우 React는 `appendChild()` DOM API를 사용하여 생성한 모든 DOM을 화면에 표시하며, 리렌더링의 경우 React는 필요한 최소한의 작업을 적용하여 DOM이 최신 렌더링 출력과 일치하도록 합니다.
 
-# 2. 여러 state 업데이트를 큐에 담기
 
 
