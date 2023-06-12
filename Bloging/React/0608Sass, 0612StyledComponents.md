@@ -109,3 +109,75 @@ styled(Button)`
 ```
 
 Styled Components를 이용해서 JavaScript 코드 안에 삽입된 CSS 코드는 글로벌 네임 스페이스를 사용하지 않습니다. 즉, 각 JavaScript 파일마다 고유한 CSS 네임 스페이스를 부여해주기 때문에, 각 React 컴포넌트에 완전히 격리된 스타일을 적용할 수 있게 됩니다.
+
+
+### 🧐 1. 바꾸고 싶은 CSS 속성이 하나인 경우의 props 이용하기
+
+Styled Components는 React 컴포넌트에 넘어온 props에 따라 다른 스타일을 적용하는 기능을 제공합니다. Tagged Template Literals을 사용하기 때문에 함수도 문자열 안에 포함시킬 수 있습니다.
+
+```jsx
+import React from "react";
+import styled from "styled-components";
+
+// // 자바스크립트의 || 연산자를 사용하여 props이 넘어오지 않은 경우, 기존에 정의한 기본 색상이 그대로 유지
+const StyledButton = styled.button`
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  line-height: 1.5;
+  border: 1px solid lightgray;
+
+  
+  color: ${(props) => props.color || "gray"};
+  background: ${(props) => props.background || "white"};
+`;
+
+// color, background prop을 <StyledButton>으로 넘기기
+function Button({ children, color, background }) {
+  return (
+    <StyledButton color={color} background={background}>
+      {children}
+    </StyledButton>
+  );
+}
+```
+
+```jsx
+import Button from "./Button";
+
+// color, background 할당 했으므로 결과는 초록 글자에 핑크 배경의 버튼 !
+<Button color="green" background="pink">
+  Green Button
+</Button>;
+```
+
+### 🧐 2. 바꾸고 싶은 CSS 속성이 하나 이상인 경우의 props 이용하기
+
+Styled Components에서 제공하는 css 함수를 사용해서 여러 개의 CSS 속성을 묶어서 정의할 수 있습니다.
+
+```jsx
+import React from "react";
+import styled, { css } from "styled-components";
+
+// 자바스크립트의 && 연산자를 사용해서, primary prop이 존재하는 경우에만 css로 정의된 스타일이 적용
+const StyledButton = styled.button`
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  line-height: 1.5;
+  border: 1px solid lightgray;
+
+  ${(props) =>
+    props.primary &&
+    css`
+      color: white;
+      background: navy;
+      border-color: navy;
+    `}
+`;
+
+// 넘겨야할 prop 값이 많아질 경우, ...props 를 사용하여 children 외 모든 prop 간편하게 전달 o
+function Button({ children, ...props }) {
+  return <StyledButton {...props}>{children}</StyledButton>;
+}
+```
