@@ -105,11 +105,10 @@ styled.button`
 // 컴포넌트 스타일링시 해당 컴포넌트 임포트 후 인자로 해당 컴포넌트 넘기기!
 styled(Button)`
   // <Button> React 컴포넌트 스타일 정의
-`
+`;
 ```
 
 Styled Components를 이용해서 JavaScript 코드 안에 삽입된 CSS 코드는 글로벌 네임 스페이스를 사용하지 않습니다. 즉, 각 JavaScript 파일마다 고유한 CSS 네임 스페이스를 부여해주기 때문에, 각 React 컴포넌트에 완전히 격리된 스타일을 적용할 수 있게 됩니다.
-
 
 ### 🧐 1. 바꾸고 싶은 CSS 속성이 하나인 경우의 props 이용하기
 
@@ -127,7 +126,6 @@ const StyledButton = styled.button`
   line-height: 1.5;
   border: 1px solid lightgray;
 
-  
   color: ${(props) => props.color || "gray"};
   background: ${(props) => props.background || "white"};
 `;
@@ -181,3 +179,34 @@ function Button({ children, ...props }) {
   return <StyledButton {...props}>{children}</StyledButton>;
 }
 ```
+
+### ✔️ styled-components 전역 스타일링
+
+규모가 있는 웹 애플리케이션을 개발할 때, 개별 컴포넌트가 아닌 모든 컴포넌트에 동일한 스타일을 적용하는 편이 유리한 경우가 있는데 대표적으로 `font-family` CSS 속성이 있습니다. 여러 컴포넌트에 걸쳐 통일된 글꼴을 사용하고 싶은 경우가 대부분이기 때문입니다.
+
+또 다른 예로, 브라우저에 상관없이 일괄적인 스타일을 적용하기 위해서 사용하는 CSS 정규화(normalize)나 CSS 초기화(reset)를 들 수 있습니다. 이러 종류의 전역 CSS 스타일도 애플리케이션 레벨에서 일괄적으로 적용해주는 것이 이상적입니다.
+
+```jsx
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "Helvetica", "Arial", sans-serif;
+    line-height: 1.5;
+  }
+
+  p, h2 {
+    font-size: 1.5rem ;
+    color : black;
+  }
+
+`;
+
+export default GlobalStyle;
+```
+함수로 생성한 전역 스타일 컴포넌트를 애플리케이션의 최상위 컴포넌트에 추가해주면 하위 모든 컴포넌트에 해당 스타일이 일괄 적용됩니다.
+
