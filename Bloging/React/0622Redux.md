@@ -35,6 +35,8 @@ Redux 는 다음과 같이 상태를 관리합니다.
 
 즉, Redux에서는 Action → Dispatch → Reducer → Store 순서로 데이터가 단방향으로 흐르게 됩니다.
 
+---
+
 ### ✔️ Store
 
 Store 는 상태가 관리되는 오직 하나뿐인 저장소를 의미하며, Redux 앱의 state가 저장되어 있는 공간입니다.
@@ -58,15 +60,15 @@ npm i redux react-redux
 <span style="color:#90caf9"><b>Step 2. index.js 완성</b></span>
 
 ```jsx
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './App';
+import React from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App";
 // react-redux에서 Provider를 불러와야 합니다.
-import { Provider } from 'react-redux';
+import { Provider } from "react-redux";
 // redux에서 createStore를 불러와야 합니다.
-import { legacy_createStore as createStore } from 'redux';
+import { legacy_createStore as createStore } from "redux";
 
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
 const store = createStore(reducer);
 
@@ -76,10 +78,12 @@ root.render(
   //  Store를 사용할 컴포넌트를 감싸준 후 Provider 컴포넌트의 props로 store를 설정
   //  전역 상태 저장소 store를 사용하기 위해서는 App 컴포넌트를 Provider로 감싸준 후 props로 변수 store를 전달
   <Provider store={store}>
-  <App />
+    <App />
   </Provider>
 );
 ```
+
+---
 
 ### ✔️ Reducer
 
@@ -111,7 +115,9 @@ const counterReducer = (state = count, action) => {
 };
 // Reducer가 리턴하는 값이 새로운 상태가 됩니다.
 ```
+
 #### 😀 여러 개의 Reducer를 사용하는 경우, Redux의 combineReducers 메서드를 사용해서 하나의 Reducer로 합쳐줄 수 있습니다.
+
 ```jsx
 
 import { combineReducers } from 'redux';
@@ -123,6 +129,63 @@ const rootReducer = combineReducers({
 });
 ```
 
-### ✔️ Action 
+---
+
+### ✔️ Action
+
+Action은 말 그대로 어떤 액션, 행동을 취할 것인지 정의 해놓은 객체를 의미합니다.
+
+```jsx
+// payload가 필요 없는 경우
+{ type: 'INCREASE' }
+
+// payload가 필요한 경우
+{ type: 'SET_NUMBER', payload: 5 }
+```
+
+여기서 `type`은 필수로 지정을 해주어야 하며, 그 외의 것들은 선택적으로 사용할 수 있습니다. 해당 Action 객체가 어떤 동작을 하는지 명시해 주는 역할을 하기 때문이며, 대문자와 Snake Case로 작성합니다.
+
+보통 Action을 직접 작성하기보다는 Action 객체를 생성하는 함수를 만들어 사용하는 경우가 많습니다. 이러한 함수를 액션 생성자(Action Creator)라고도 합니다.
+
+```jsx
+// payload가 필요 없는 경우
+const increase = () => {
+  return {
+    type: "INCREASE",
+  };
+};
+
+// payload가 필요한 경우
+const setNumber = (num) => {
+  return {
+    type: "SET_NUMBER",
+    payload: num,
+  };
+};
+```
+
+이렇게 모든 변화를 `Action`을 통해 취하는 것은 우리가 만드는 앱에서 무슨 일이 일어나고 있는지 알기 쉽게 하는 역할을 합니다.
+
+---
+
+### ✔️ Dispatch
+
+Dispatch는 Reducer로 Action 객체를 전달해 주는 함수를 의미하며, Dispatch의 전달 인자로 Action 객체가 전달됩니다.
+
+```jsx
+// Action 객체를 직접 작성하는 경우
+dispatch( { type: 'INCREASE' } );
+dispatch( { type: 'SET_NUMBER', payload: 5 } );
+
+// 액션 생성자(Action Creator)를 사용하는 경우
+dispatch( increase() );
+dispatch( setNumber(5) );
+
+// Action 객체를 전달받은 Dispatch 함수는 Reducer 호출
+```
+
+--- 
+
+
 
 그림 및 내용 출처 : 코드스테이츠
