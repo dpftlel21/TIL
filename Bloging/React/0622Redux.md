@@ -174,18 +174,63 @@ Dispatch는 Reducer로 Action 객체를 전달해 주는 함수를 의미하며,
 
 ```jsx
 // Action 객체를 직접 작성하는 경우
-dispatch( { type: 'INCREASE' } );
-dispatch( { type: 'SET_NUMBER', payload: 5 } );
+dispatch({ type: "INCREASE" });
+dispatch({ type: "SET_NUMBER", payload: 5 });
 
 // 액션 생성자(Action Creator)를 사용하는 경우
-dispatch( increase() );
-dispatch( setNumber(5) );
+dispatch(increase());
+dispatch(setNumber(5));
 
 // Action 객체를 전달받은 Dispatch 함수는 Reducer 호출
 ```
 
---- 
+---
+
+### ✔️ Redux Hook
+
+#### 😀 useDispatch()
+
+`useDispatch()`는 Action 객체를 Reducer로 전달해 주는 Dispatch 함수를 반환하는 메서드 입니다. 위에서 사용한 dispatch 함수도 useDispatch()를 이용해서 만들 것 입니다.
+
+```jsx
+import { useDispatch } from "react-redux";
+
+const dispatch = useDispatch();
+dispatch(increase());
+console.log(counter); // 2
+
+dispatch(setNumber(5));
+console.log(counter); // 5
+```
+
+#### 😀 useSelector
+
+`useSelector()`는 컴포넌트와 state를 연결하여 Redux의 state에 접근할 수 있게 해주는 메서드입니다.
+
+```jsx
+// Redux Hooks 메서드는 'redux'가 아니라 'react-redux'에서 불러옵니다.
+import { useSelector } from 'react-redux'
+const counter = useSelector(state => state)
+console.log(counter) // 1
+```
+
+---
+
+### ✔️ Redux 세 가지 원칙
+
+#### 1. Single source of truth
+
+동일한 데이터는 항상 같은 곳에서 가지고 와야한다는 의미며, Redux에는 데이터를 저장하는 Store라는 단 하나뿐인 공간이 있음과 연결 되는 원칙입니다.
+
+#### 2. State is read-only
+
+상태는 읽기전용이라는 뜻으로, React에서 상태갱신함수로만 상태를 변경할 수 있었던 것 처럼, Redux의 상태도 직접 변경할 수 없음을 의미합니다. 즉 Action 객체가 있어야만 상태를 변경할 수 있음과 연결되는 원칙입니다.
+
+#### 3. Changes are made with pure functions
+
+변경은 순수함수로만 가능하다는 뜻으로, 상태가 엉뚱한 값으로 변경되는 일이 없도록 순수함수로 작성되어야 하는 Reducer와 연결되는 원칙입니다.
 
 
+---
 
 그림 및 내용 출처 : 코드스테이츠
