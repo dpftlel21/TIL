@@ -91,5 +91,9 @@ export default Children;
 
 <img src = "https://postfiles.pstatic.net/MjAyMzA2MjVfMTU2/MDAxNjg3Njk4NjM3ODc0.q4evlmB7dkTbHsX7JyCR6Tz2TVIvoU3GHfYZHrtrtIIg.pSKO7HNkyalGkmRwPujK_JVxJ5f9YEPXxqN8C6FAEgog.PNG.dkdnmju/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2023-06-25_221008.png?type=w773">
 
+---
+
+참고자료 : https://velog.io/@jminkyoung/TIL-6-React-Hooks-useContext-%EB%9E%80
+
 
 
