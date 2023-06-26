@@ -33,8 +33,11 @@ useMemo는 useEffect처럼 첫 번째 인자로 콜백 함수, 두 번째 인자
 
 #### 🤔 실전 예제 1. ( 어려운 계산기, 쉬운 계산기)
 
-<iframe src="https://stackblitz.com/edit/stackblitz-starters-nnf2gc?embed=1&file=src%2FApp.js"
+<iframe src="https://codesandbox.io/embed/pensive-elgamal-knn526?fontsize=14&hidenavigation=1&theme=dark"
      style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+     title="pensive-elgamal-knn526"
+     allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
    ></iframe>
 
 
