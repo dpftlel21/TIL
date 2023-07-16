@@ -1,0 +1,163 @@
+/* global */
+* {
+    margin: 0;
+    padding: 0;
+    border: 0px;
+    box-sizing: border-box;
+    font-family: 'verdana';
+    font-weight: bold;
+    color: #000;
+  }
+  
+  body {
+    background-image: url("./IMG_5079.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /*
+    Calculator styles
+  */
+  
+  .container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* 계산기 꾸미기 */
+  .calculator {
+    width: 300px;
+    height: 450px; 
+    padding: 30px 20px;
+    margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    background: linear-gradient(60deg, #f0d094, #e61313);
+    box-shadow: 3px 3px 10px 4px #C1C4C6;
+    border-radius: 10px;
+  }
+  
+   /* 출력되지 않는 부분 가리기 */
+  .calculator__display--bare {
+    display: none; 
+    background-color: white;
+    text-align: center;
+    vertical-align: middle;
+    height: 100px;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 25px 15px;
+    overflow: hidden;
+    overflow-wrap: break-word;
+  }
+  
+  /* 계산 화면 숫자 꾸미기 */
+  .calculator__display--bare > span {
+    display: inline-block;
+    text-align: center;
+    background-color: #ffffff;
+    margin: 5px;
+    width: 40px;
+    height: 45px;
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 10px 5px;
+  }
+
+   /* 계산 화면 꾸미기 */
+  .calculator__display--for-advanced {
+    background-color: #faedcff5;
+    box-shadow: 1px 1px 6px 1px #0000003b inset;
+    height: 100px;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 20px;
+    text-align: right;
+    vertical-align: middle;
+    padding: 25px 15px;
+    overflow: hidden;
+    overflow-wrap: break-word;
+  }
+  
+
+  /* 버튼 화면 꾸미기 */
+  .calculator__buttons {
+    width: 265px;
+    height: 300px;
+    margin-top: 30px;
+    border-radius: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(233, 230, 187);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.216);
+    box-shadow: 1px 1px 2px 1px #0000003a; 
+  }
+  
+    /* 버튼 꾸미기 시작 */
+  .clear__and__enter {
+    height: 50px;
+    margin: 10px;
+    display: flex;
+    width: 250px;
+  }
+  
+  .clear__and__enter > button {
+    width: 55px;
+    border-radius: 10px;
+    margin: 0px 5px;
+    cursor: pointer;
+    outline: none;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.216);
+    box-shadow: 1px 1px 2px 1px #0000003a;  }
+  
+  .button__row {
+    height: 50px;
+    margin: 10px;
+    display: flex;
+    width: 250px;
+  }
+  
+  .button__row > button {
+    width: 85px;
+    margin: 0 5px;
+    border-radius: 30px;
+    cursor: pointer;
+    outline: none;
+    background-color: #ec6e57;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.216);
+    box-shadow: 1px 1px 2px 1px #0000003a;  }
+  
+  
+  .button__row > .operator ,
+  .clear__and__enter > .operator {
+    background-color: #f1e212;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.216);
+    box-shadow: 1px 1px 2px 1px #0000003a;  }
+  
+  
+  .button__row > .double {
+    width: 150px;
+  }
+  
+  .logo {
+    position: fixed;
+    padding: 30px;
+    bottom: 0px;
+    right: 0px;
+
+  }
+
+
+  
+  button:hover {
+    position: relative; top: 2px; left: 2px; 
+  }
