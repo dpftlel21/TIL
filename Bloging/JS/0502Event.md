@@ -216,7 +216,8 @@ addEventListener가 인수로 객체 형태의 핸들러를 받으면 이벤트 
 
 <script>
   document.addEventListener("click", function (event) {
-    if (event.target.dataset.counter != undefined) {  // 속성이 존재할 경우
+    if (event.target.dataset.counter != undefined) {
+      // 속성이 존재할 경우
       event.target.value++;
     }
   });
@@ -226,16 +227,12 @@ addEventListener가 인수로 객체 형태의 핸들러를 받으면 이벤트 
 - 토글러 구현 (속성값이 id인 요소 나타나거나 사라짐, `data-toggle-id`)
 
 ```html
-<button data-toggle-id="subscribe-mail">
-  토글 버튼
-</button>
+<button data-toggle-id="subscribe-mail">토글 버튼</button>
 
-<form id="subscribe-mail" hidden>
-  메일 주소: <input type="email">
-</form>
+<form id="subscribe-mail" hidden>메일 주소: <input type="email" /></form>
 
 <script>
-  document.addEventListener('click', function(event) {
+  document.addEventListener("click", function (event) {
     let id = event.target.dataset.toggleId;
     if (!id) return;
 
@@ -244,10 +241,10 @@ addEventListener가 인수로 객체 형태의 핸들러를 받으면 이벤트 
     elem.hidden = !elem.hidden;
   });
 </script>
-
 ```
 
 행동 패턴을 응용하면 토글 기능이 필요한 요소 전체에 자바스크립트로 해 해당 기능을 구현해 주지 않아도 되기 때문에 매우 편리합니다. '행동’을 선언해 주기만 하면 되기 때문입니다. 문서 레벨에 적절한 핸들러를 구현해주기만 하면 페이지 내 모든 요소에 행동을 쉽게 적용할 수 있습니다.
 
----
+#### 📝 2023. 05. 02 기록
 
+---
