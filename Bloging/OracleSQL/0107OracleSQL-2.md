@@ -156,3 +156,42 @@ VALUES
 (8, '정희', '조이', 31, 'wjdgml@naver.com'),
 (9, '낙수', '낙지', 19, 'skrtn@naver.com');
 ```
+
+#### ✍️ 테이블 행 데이터(레코드) 수정하기 (UPDATE)
+
+```js
+UPDATE 테이블명
+SET 바꿀 열 = 데이터(레코드) - 바꿀 내용 입력
+WHERE 바뀔 열 = 데이터(레코드)
+```
+
+<img src="https://postfiles.pstatic.net/MjAyNDAxMDdfODQg/MDAxNzA0NjA4OTc3ODAx.KuKtNiiBBDTUwM-RHs49NRjcWH-mqAZp3g6HNjIntxYg.gyFHp390xfsYB8tjEmA8RqM1WBdA4E-ElLCUrznK1DAg.PNG.dkdnmju/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2024-01-07_152920.png?type=w773" height="200px">
+
+✔️ 경준이의 NICKNAME(별명) 수정
+
+1. 바꿀 테이블 선택
+2. 바꿀 열 (NICKNAME) = 경주마(바꿀 내용)
+3. 바뀔 열 (NAME) = 경준 (바뀔열 선택)
+
+#### ✍️ 테이블 행 데이터(레코드) 삭제하기 (DELETE)
+
+```js
+// 테이블의 행 삭제
+DELETE FROM 테이블명
+WHERE 삭제할 데이터 (레코드)
+
+// 테이블의 모든 데이터 삭제
+DELETE FROM 테이블 명
+```
+
+<img src="https://postfiles.pstatic.net/MjAyNDAxMDdfMjc2/MDAxNzA0NjA5NzQ2MTg2.Yf5qJ1FIUN0Hzu9ggJAXJ-ZIarhPvg_PQ49O_tZsylAg.52lQQGY8g0WG8_Ya1TRFAu2QjyisGeaJkiuZMDLFT0sg.PNG.dkdnmju/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2024-01-07_154215.png?type=w773" height="200px">
+
+✔️ 초이의 데이터 삭제
+
+1. 삭제할 테이블 선택
+2. 삭제할 열의 데이터(레코드) 선택 - `NAME='초이'`
+
+```js
+DELETE FROM USERSPRACTICE
+WHERE NAME = '초이';
+```
