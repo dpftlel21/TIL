@@ -15,10 +15,9 @@ React 애플리케이션에서 서버 상태 관리를 위한 라이브러리이
 
 4. `로딩 및 에러 상태 관리` : 데이터 로딩 상태와 에러 처리를 쉽게 할 수 있어, 사용자 경험을 개선할 수 있습니다.
 
-
 ---
 
-### 📚 UseQuery
+### 📚 useQuery
 
 가장 기본적인 쿼리 훅이며, 컴포넌트에서 데이터를 가져올 때 사용합니다. 
 
@@ -117,14 +116,113 @@ queryFn: async () => {
 
 ---
 
-### 📚 UseInfiniteQuery
+### 📚 useInfiniteQuery
 
+useInfiniteQuery는 `더보기` , `무한스크롤` 등 UI개발을 위해 지원하는 훅입니다.
+
+```tsx
+const result = useInfiniteQuery<페이지타입>(옵션)
+```
+#### ✔️ 옵션(Option)
+
+`useInfiniteQuery`는 useQuery의 모든 옵션을 사용할 수 있고, 아래와 같은 추가적인 옵션도 사용이 가능합니다.
+
+| 옵션                    | 설명                                                                                                       | 기본값     |
+|-------------------------|----------------------------------------------------------------------------------------------------------|------------|
+| `getNextPageParam`       | 새로운 다음 페이지를 가져오면, 다음 페이지의 정보로 호출되는 함수.<br>다음 페이지 번호를 반환<br>다음 페이지가 없으면, `undefined` 또는 `null`을 반환 | |
+| `getPreviousPageParam`   | 새로운 이전 페이지를 가져오면, 이전 페이지의 정보로 호출되는 함수.<br>이전 페이지 번호를 반환<br>이전 페이지가 없으면, `undefined` 또는 `null`을 반환 |  |
+| `initialPageParam`       | 첫 번째 페이지의 번호                                                                                   |  |
+| `maxPages`               | 저장 및 출력할 최대 페이지의 수.<br>페이지가 지나치게 많은 경우에 유용                                    | Infinite   |
+
+
+#### ✔️ 반환(result)
+
+| 반환 속성               | 설명                              |
+|-------------------------|-----------------------------------|
+| `fetchNextPage`         | 다음 페이지를 가져오는 함수      |
+| `fetchPreviousPage`     | 이전 페이지를 가져오는 함수      |
+| `hasNextPage`           | 다음 페이지가 있는지 여부        |
+| `hasPreviousPage`       | 이전 페이지가 있는지 여부        |
+| `isFetchingNextPage`    | 다음 페이지를 가져오는 중인지 여부|
+| `isFetchingPreviousPage`| 이전 페이지를 가져오는 중인지 여부|
 
 ---
 
+### 📚 useMutation
+
+데이터 변경(생성, 수정, 삭제)을 위해 사용되며, 데이터 변경 작업을 처리하고 성공, 실패, 로딩 등의 상태를 얻을 수 있습니다. 또한 요청 실패 시의 자동 재시도나 낙관적 업데이트 같은 고긍 기능들도 처리 가능합니다.
+
+`낙관적 업데이트 (Optimistic Update)` : 서버 요청의 응답을 기다리지 않고, 먼저 UI를 업데이트하는 기능, 서버 응답이 느린 상황에서도 빠른 인터페이스를 제공할 수 있어 사용자 경험을 크게 향상시킬 수 있습니다.
+
+```tsx
+const result = useMutation(옵션)
+```
+
+#### ✔️ 옵션(Option)
+
+| 옵션          | 설명                                                                                | 기본값        |
+|---------------|-------------------------------------------------------------------------------------|---------------|
+| `gcTime`      | 비활성 캐시 데이터(Inactive)가 메모리에 남아 있는 시간(ms)                        |  |
+| `meta`        | 활용할 메타 정보를 저장                                                            |               |
+| `mutationFn`  | 실행할 비동기 변이 함수 `필수`                                                  |               |
+| `mutationKey` | `queryClient.setMutationDefaults`의 기본값 상속을 위한 키                             |               |
+| `networkMode` | 네트워크 모드 설정                                                                  | `online`      |
+| `onError`     | 변이 중 오류가 발생할 때 호출되는 함수                                               |               |
+| `onMutate`    | 변이 함수가 실행되기 전에 호출되는 함수                                              |               |
+| `onSettled`   | 변이가 성공하거나 실패해도 항상 호출되는 함수                                        |               |
+| `onSuccess`   | 변이가 성공할 때 호출되는 함수                                                      |               |
+| `queryClient` | 커스텀 쿼리 클라이언트 연결                                                          |               |
+| `retry`       | 변이 실패 시 재시도 횟수                                                             | `0`           |
+| `retryDelay`  | 재시도 시간 간격(ms)                                                                 |               |
+| `scope`       | 동시 실행 범위 설정. 같은 범위 ID를 가진 변이는 병렬이 아닌 직렬로 실행             |               |
+| `throwOnError`| 변이 실패 시 오류를 던질지 여부                                                      | `undefined`   |
 
 
 
+#### ✔️ 반환(result)
+
+| 반환 속성        | 설명                                                                                     |
+|------------------|------------------------------------------------------------------------------------------|
+| `data`           | 성공적으로 가져온 데이터                                                                 |
+| `error`          | 오류가 발생했을 때의 오류 객체. 오류가 발생하지 않았다면 `null`                          |
+| `failureCount`   | 변이의 실패 횟수. 변이가 실패할 때마다 증가하고 변이가 성공하면 0으로 재설정           |
+| `failureReason`  | 변이의 재시도 실패 이유 쿼리가 성공하면 `null`로 재설정                                 |
+| `isError`        | 변이 함수에서의 오류 발생 여부                                                           |
+| `isIdle`         | 변이 함수가 실행되기 전의 초기 상태인지 여부                                              |
+| `isPaused`       | 변이 함수가 일시 중단되었는지 여부                                                       |
+| `isPending`      | 변이 함수가 실행 중인지 여부                                                             |
+| `isSuccess`      | 데이터가 성공적으로 가져왔는지 여부                                                      |
+| `mutate`         | 변이 실행 함수                                                                            |
+| `mutateAsync`    | 비동기 변이 실행 함수                                                                     |
+| `reset`          | 변이 내부 상태를 초기 상태로 재설정하는 함수                                              |
+| `status`         | 변이의 현재 상태 <br>`idle`: 초기 상태, <br>`pending`: 실행 중, <br>`error`: 오류 발생, <br>`success`: 성공 |
+| `submittedAt`    | 변이가 제출된 시간(유닉스 타임스탬프)                                                    |
+| `variables`      | 변이 실행 함수(`mutate`)에 전달된 데이터                                                  |
+
+
+#### ✔️ 개발자 도구 사용
+
+`npm i @tanstack/react-query-devtools`
+
+```tsx
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import DelayedData from './components/DelayedData'
+
+const queryClient = new QueryClient()
+
+export default function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <DelayedData />
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  )
+}
+```
 
 
 [출처 : HEROPY.DEV](https://www.heropy.dev/p/HZaKIE)
