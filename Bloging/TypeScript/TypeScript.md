@@ -133,75 +133,6 @@ Person 인터페이스를 extends 키워드로 상속해 새로운 인터페이�
 
 ---
 
-### ✅ 타입
-
-TypeScript는 JavaScript와 거의 동일한 데이터 타입을 지원합니다.
-
-```ts
-// Boolean
-let isShow: boolean = true;
-let isDone: boolean = false;
-
-// Number
-// TypeScript는 bright 지원
-let number1: number = 1;
-let number2: number = 0.2;
-
-// String
-let firstName: string = "coding";
-let lastName: string = "kim";
-
-// Array , 2가지 방법으로 배열 다룸 o
-//첫 번째 방법
-let items: string[] = ["apple", "banana", "grape"];
-
-//두 번째 방법 - 제네릭 배열 타입 사용
-let numberList: Array<number> = [4, 7, 100];
-
-// Tuple , 요소의 타입과 개수가 고정된 배열 표현 o
-let user: [string, number, boolean] = ["kimcoding", 20, true];
-
-// Object - 원시 타입이 아닌 타입 (number, string, boolean, undefined, null, symbol)
-// key-value에 구체적인 타입까지도 지정 o
-let obj: object = {};
-
-let user: { name: string; age: number } = {
-  name: "kimcoding",
-  age: 20,
-};
-```
-
-#### Any 타입
-
-간혹 알지 못하는 타입을 표현해야 할 때도 있는데, 클라이언트에서 유저로부터 받은 데이터 및 서드파티 라이브러리에서 들어오는 값인 경우 개발자가 알지 못하는 타입일 수 있습니다. 이때 `any`를 사용합니다.
-
-```ts
-let maybe: any = 4;
-```
-
-any 타입을 사용하게 되면, 변수에 값을 재할당하는 경우 타입을 명시한 변수와 달리 타입에 구애받지 않고 값을 재할당할 수 있게 됩니다.
-
-```ts
-let obj: object = {};
-
-//에러가 납니다.
-obj = "hello";
-
-let maybe: any = 4;
-
-//정상적으로 동작합니다.
-maybe = true;
-```
-
-any 타입은 타입의 일부만 알고, 전체는 알지 못할 때 유용합니다. 예를 들어서 여러 타입이 섞인 배열을 받고자 할 때 유용합니다.
-
-```ts
-let list: any[] = [1, true, "free"];
-
-//any로 다루고 있기 때문에 index 1번째 요소가 boolean 타입이지만 number 타입으로 재할당할 수 있습니다.
-list[1] = 100;
-```
-
 ### 📝 타입 추론
 
 타입 추론은 변수나함수의 타입을 선언하지 않아도 TypeScript가 자동으로 유추하는 기능입니다
@@ -347,93 +278,6 @@ function askSomeone(someone: Developer & Person) {
 
 ---
 
-### ✅ 열거형
-
-TypeScript의 열거형 (Enum)은 특정 값의 집합을 정의할 때 사용됩니다. JavaScript에서는 기본적으로 열거형을 지원하지 않지만, TypeScript에서는 문자형 열거형과 숫자형 열거형을 지원합니다.
-
-```ts
-enum Color {
-  Red,
-  Green,
-  Blue,
-}
-```
-
-### 📝 숫자형 열거형
-
-열거형은 숫자형과 문자열형, 혹은 이 둘의 조합으로 정의될 수 있습니다. 디폴트 값으로 숫자형을 사용하며, 각 값은 자동으로 0부터 시작하여 1씩 증가합니다. 수동으로도 값을 지정할 수 있습니다 !
-
-```ts
-enum Color {
-  Red = 1,
-  Green = 2,
-  Blue = 4,
-}
-
-let c: Color = Color.Green;
-let greenValue: number = Color.Green;
-let blueValue: number = Color.Blue;
-
-console.log(c); // 출력: 2
-console.log(greenValue); // 출력: 2
-console.log(blueValue); // 출력: 4
-```
-
-열거형은 일반적으로 상수값을 대신하여 사용되므로, 타입스크립트에서는 열거형이 많이 사용됩니다. 열거형은 코드를 더욱 가독성 높게 만들어주고, 오타와 같은 실수를 방지해 줍니다.
-
-### 📝 문자형 열거형
-
-문자형 열거형은 열거형의 값을 전부 다 특정 문자 또는 다른 열거형 값으로 초기화해야 합니다.
-
-```ts
-enum Direction {
-  Up = "UP",
-  Down = "DOWN",
-  Left = "LEFT",
-  Right = "RIGHT",
-}
-
-let myDirection: Direction = Direction.Up;
-console.log(myDirection); // 출력: "UP"
-```
-
-문자열 기반의 열거형은 주로 외부에서 가져온 값을 TypeScript에서 다루기 위해 사용됩니다. 예를들어 HTTP 요청 방식을 나타내는 열거형을 정의할 수 있습니다.
-
-```ts
-enum HttpMethod {
-  Get = "GET",
-  Post = "POST",
-  Put = "PUT",
-  Delete = "DELETE",
-}
-
-function makeRequest(url: string, method: HttpMethod) {
-  // ...
-}
-
-makeRequest("/api/data", HttpMethod.Post);
-```
-
-위 코드에서는 HTTP 요청 방식을 나타내는 HttpMethod 열거형을 정의하고 있습니다. makeRequest 함수는 URL과 HTTP 요청 방식을 인자로 받습니다. HTTP 요청 방식을 지정할 때는 HttpMethod.Post와 같이 열거형 값을 사용합니다.
-
-이렇게 열거형을 사용하면 오타와 같은 실수를 방지할 수 있으며, 코드의 가독성과 안정성을 높일 수 있습니다.
-
-### 📝 역 매핑
-
-역 매핑은 숫자형 열거형에만 존재하는 특징입니다. 열거형의 키(key)로 값(value)을 얻을 수 있고 값(value)으로 키(key)를 얻을 수도 있습니다.
-
-```ts
-enum Enum {
-  A,
-}
-let a = Enum.A;
-let nameOfA = Enum[a]; // "A"
-```
-
-위와 같이 열거형의 키로 값을 얻을 수 있지만, 값으로도 열거형의 키를 얻을 수 있습니다. 이는 숫자형 열거형에만 존재하며, 문자형 열거형에서는 존재하지 않는 특징입니다.
-
----
-
 ### ✅ 클래스
 
 ```ts
@@ -534,6 +378,7 @@ printLog 함수는 타입을 불문하고 동작하므로 제네릭이라 할 �
 
 ### 📝 인터페이스와 제네릭
 
+```js
 interface Item<T> {
   name: T;
   stock: number;
@@ -543,7 +388,7 @@ interface Item<T> {
 
 이와 같이 작성하면 Item 인터페이스를 사용하여 만든 객체는 name의 값으로 어떤 타입이 들어갈지만 작성을 해주면 인터페이스를 여러 개 만들지 않고도 재사용을 할 수 있게 됩니다.
 
-```ts
+```js
 const obj: Item<string> = {
   name: "T-shirts",
   stock: 2,
@@ -566,7 +411,7 @@ class GenericNumber<T> {
   zeroValue: T;
   add: (x: T, y: T) => T;
 }
-
+f
 let myGenericNumber = new GenericNumber<number>();
 myGenericNumber.zeroValue = 0;
 myGenericNumber.add = function (x, y) {
