@@ -141,7 +141,7 @@ export default function Header() {
 
 ### 🤔 동적 경로
 
-미리 정의할 수 없는 동적 경로는, `[]` 문자를 사용하여 폴더 이름을 작성합니다. URL의 세그먼트 값이, params Prop으로 전달되고, `[]` 사이의 퐆ㄹ더 이름이 속성 이름이 됩니다. 쿼리 스트링을 사용하는 경우에는 searchParams Prop으로 전달됩니다.
+미리 정의할 수 없는 동적 경로는, `[]` 문자를 사용하여 폴더 이름을 작성합니다. URL의 세그먼트 값이, params Prop으로 전달되고, `[]` 사이의 폴더 이름이 속성 이름이 됩니다. 쿼리 스트링을 사용하는 경우에는 searchParams Prop으로 전달됩니다.
 
 ```
 # 구조
@@ -271,4 +271,58 @@ export default function NotFound() {
 }
 ```
 
+2025.02.11
+
 ---
+
+### 🤔 Redirect
+
+`next.config.js` 파일에서 redirects 옵션을 사용하면 들어오는 요청 경로를 다른 목적지 경로로 리다이렉트 할 수 있습니다. 이는 페이지의 URL 구조를 변경하거나 미리 알려진 리다이렉션 목록이 있는 경우 유용합니다.
+
+`redirects`는 경로, 헤더, 쿠키 및 쿼리 매칭을 지원하여 들어오는 요청을 기반으로 사용자를 리다이렉션 할 수 있는 유연성을 제공합니다.
+
+```js
+// next.config.js
+module.exports = {
+  async redirects() {
+    return [
+      // Basic redirect
+      {
+        source: '/about',
+        destination: '/',
+        permanent: true,
+      },
+      // Wildcard path matching
+      {
+        source: '/blog/:slug',
+        destination: '/news/:slug',
+        permanent: true,
+      },
+    ];
+  },
+};
+```
+
+#### ✔️ Middleware에서의 NextResponse.redirect
+
+Middleware에서는 요청이 완료되기 전에 코드를 실행할 수 있게 합니다. 그런 다음 들어오는 요청을 기반으로 다른 URL로 리다이렉션할 수 있습니다. 이는 조건부 리다이렉션이나 대규모 리다이렉션을 구현하는 데 유용합니다.
+
+```tsx
+// 사용자가 인증되지 않은 경우 로그인 페이지로 리다이렉션
+// Middleware는 next.config.js의 redirects 이후 및 렌더링 이전에 실행
+
+import { NextResponse, NextRequest } from 'next/server';
+import { authenticate } from 'auth-provider';
+
+export default function middleware(request: NextRequest) {
+  if (isAuthenticated) {
+    return NextResponse.next();
+  }
+
+  return NextResponse.redirect(new URL('/login', request.url));
+}
+
+export const config = {
+  matcher: '/dashboard/:path*',
+};
+```
